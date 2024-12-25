@@ -64,6 +64,21 @@ app.put('/tasks/:id', async (req, res) => {
   }
 });
 
+app.patch('/tasks/:id', async (req, res) => {
+  const { id } = req.params;
+  const { completed } = req.body;
+  try {
+    const patchedTask = await prisma.task.update({
+      where: { id: parseInt(id) },
+      data: { completed },
+    });
+    res.status(200).json(patchedTask);
+  } catch (error) {
+    console.error('Error updating completed status:', error.message);
+    res.status(500).json({ error: 'Unable to update status' });
+  }
+});
+
 app.delete('/tasks/:id', async (req, res) => {
   const { id } = req.params;
   try {

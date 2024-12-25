@@ -25,6 +25,20 @@ export default function HomePage () {
       router.push(`/task/${id}`);
     }
 
+    const patchTasks = async (id: number) => {
+      const task = tasks.find((t) => t.id === id);
+      if (task === undefined) {
+        console.error(`Task with id ${id} not found.`);
+        return;
+      }
+      await axios.patch(`http://localhost:4000/tasks/${id}`, {
+        completed: !task.completed
+      });
+      setTasks((prevTasks) =>
+      prevTasks.map((t) =>
+        t.id === id ? { ...t, completed: !t.completed } : t
+      ))
+    }
     useEffect (() => {
       const button = document.getElementById("create-task");
       if (button) {
@@ -89,11 +103,7 @@ export default function HomePage () {
                 type="checkbox"
                 checked={task.completed}
                 onClick = {(e) => {e.stopPropagation()}}
-                onChange={() =>
-                  setTasks((prevTasks) =>
-                    prevTasks.map((t) =>
-                      t.id === task.id ? { ...t, completed: !t.completed } : t
-                    ))}
+                onChange={() => patchTasks(task.id)}
               className="mr-3 rounded-full ring-2 ring-blue-500 checked:bg-blue-500 checked:border-transparent appearance-none w-4 h-4 flex items-center justify-center"/>
                 <span className={task.completed ? 'line-through text-gray-400' : ''} 
                       style={{ color: task.color, fontSize: 20, fontWeight: 700}}>
