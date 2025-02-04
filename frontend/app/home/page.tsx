@@ -6,14 +6,14 @@ import {useRouter} from 'next/navigation';
 export default function HomePage () {
     const [tasks, setTasks] = useState<{ id: number; title: string; color: string; completed: boolean }[]>([]);
     const router = useRouter();
-
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
     const addTask = () => {
         router.push('/task');
       };
 
     const deleteTask = async (id: number) => {
       try{
-        const response = await axios.delete(`http://localhost:4000/tasks/${id}`);
+        const response = await axios.delete(`${apiUrl}/tasks/${id}`);
         setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
         alert(`${response.data.title} has been deleted`)
       } catch (error) {
@@ -31,7 +31,7 @@ export default function HomePage () {
         console.error(`Task with id ${id} not found.`);
         return;
       }
-      await axios.patch(`http://localhost:4000/tasks/${id}`, {
+      await axios.patch(`${apiUrl}/tasks/${id}`, {
         completed: !task.completed
       });
       setTasks((prevTasks) =>
@@ -48,7 +48,7 @@ export default function HomePage () {
         localStorage.setItem("buttonMid", midpoint);
       }
       const fetchTasks = async() => {
-        const response = await axios.get('http://localhost:4000/tasks');
+        const response = await axios.get(`${apiUrl}/tasks`);
         setTasks(response.data);
       }
       fetchTasks();

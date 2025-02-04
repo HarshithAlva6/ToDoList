@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter, useParams } from 'next/navigation';
 
 export default function TaskDetailPage() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
   const { id } = useParams();  
   const [taskTitle, setTaskTitle] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
@@ -19,7 +20,7 @@ export default function TaskDetailPage() {
       if (taskTitle && selectedColor) {
         alert(`Task: ${taskTitle}, Color: ${selectedColor}`);
         try {
-          await axios.put(`http://localhost:4000/tasks/${id}`, {
+          await axios.put(`${apiUrl}/tasks/${id}`, {
             title: taskTitle,
             color: selectedColor,
             completed: false
@@ -44,7 +45,7 @@ export default function TaskDetailPage() {
         }
         const getTask = async() => {
             try {
-            const info = await axios.get(`http://localhost:4000/tasks/${id}`);
+            const info = await axios.get(`${apiUrl}/tasks/${id}`);
             setTaskTitle(info.data.title);
             setSelectedColor(info.data.color);
             } catch (error) {
