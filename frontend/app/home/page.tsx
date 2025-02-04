@@ -88,12 +88,12 @@ export default function HomePage () {
         <hr></hr>
         <div className="flex flex-col items-center mt-10">
             <div className="text-5xl mb-4">\uD83D\uDCC4</div>
-             <p>You don't have any tasks registered yet.</p>
+             <p>You don&apos;t have any tasks registered yet.</p>
              <p>Create tasks and organize your to-do items.</p>
         </div></>):
         (<div>
             <ul className="space-y-4">
-            {tasks.map((task, index) => (
+            {tasks.map((task) => (
               <li
                 key={task.id}
                 className="flex items-center justify-between bg-gray-700 p-3 rounded-lg cursor-pointer hover:bg-gray-600"

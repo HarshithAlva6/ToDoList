@@ -18,14 +18,14 @@ export default function TaskPage () {
       if (taskTitle && selectedColor) {
         alert(`Task: ${taskTitle}, Color: ${selectedColor}`);
         try {
-          const response = await axios.post('http://localhost:4000/tasks', {
+          await axios.post('http://localhost:4000/tasks', {
             title: taskTitle,
             color: selectedColor,
             completed: false
           });
           setAdded(true);
         } catch (error) {
-          console.error('Error creating task');
+          console.error('Error creating task', error);
         }
         setTaskTitle('');
         setSelectedColor('');

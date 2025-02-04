@@ -26,7 +26,7 @@ export default function TaskDetailPage() {
           });
           setAdded(true);
         } catch (error) {
-          console.error('Error editing task');
+          console.error('Error editing task', error);
         }
         setTaskTitle('');
         setSelectedColor('');
@@ -48,7 +48,7 @@ export default function TaskDetailPage() {
             setTaskTitle(info.data.title);
             setSelectedColor(info.data.color);
             } catch (error) {
-                console.error(`Error fetching task for the ${id}`);
+                console.error(`Error fetching task for the ${id}`, error);
               }
         }
         getTask();
